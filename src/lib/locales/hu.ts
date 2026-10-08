@@ -66,6 +66,8 @@ export default {
         files: 'Fájlok',
         fileSettings: 'Fájlbeállítások',
         autoSave: 'Módosítások automatikus mentése',
+        persistOpenEditors: 'Nyitott szerkesztők megőrzése',
+        persistOpenEditorsHint: 'A nyitott szerkesztők és a nem mentett módosítások megőrzése a munkamenetek között, a névtelen dokumentumokat is beleértve. Az ablak bezárásakor nem jelenik meg mentési kérdés. Az eredeti fájlok nem változnak.',
         toolbarPlacement: 'Eszköztár helye',
         toolbarOnBar: 'Sáv',
         toolbarInMenu: 'Menü',
@@ -181,6 +183,7 @@ export default {
         wordWrapColumn: 'Oszlop'
     },
     toast: {
+        recoveryFailed: 'Nem sikerült megőrizni a nyitott szerkesztőket.',
         imageSavedSuccessfully: 'Kép sikeresen mentve',
         failedToSaveImage: 'Kép mentése sikertelen',
         diagramSavedAsSVG: 'Diagram SVG-ként mentve',

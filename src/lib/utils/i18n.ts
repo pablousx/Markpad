@@ -83,6 +83,8 @@ const en: Translation = {
         toolbarsSettings: 'Toolbar Settings',
         fileSettings: 'File Settings',
         autoSave: 'Auto-save edits',
+        persistOpenEditors: 'Persist open editors',
+        persistOpenEditorsHint: 'Keep open editors and unsaved changes between sessions, including untitled documents. Closing a window does not prompt to save. Original files are not changed.',
         settingsFile: 'Settings file',
         importSettings: 'Import…',
         exportSettings: 'Export…',
@@ -302,6 +304,7 @@ const en: Translation = {
         wholeWord: 'Match whole word'
     },
     toast: {
+        recoveryFailed: 'Could not persist open editors.',
         imageSavedSuccessfully: 'Image saved successfully',
         failedToSaveImage: 'Failed to save image',
         diagramSavedAsSVG: 'Diagram saved as SVG',

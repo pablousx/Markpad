@@ -85,6 +85,8 @@ export default {
         files: 'Pliki',
         fileSettings: 'Ustawienia plików',
         autoSave: 'Autozapis zmian',
+        persistOpenEditors: 'Zachowuj otwarte edytory',
+        persistOpenEditorsHint: 'Zachowuj otwarte edytory i niezapisane zmiany między sesjami, także w dokumentach bez tytułu. Zamknięcie okna nie wyświetla pytania o zapisanie zmian. Oryginalne pliki nie są zmieniane.',
         resizeWindow: 'Zmień rozmiar okna ustawień'
     },
     colors: {
@@ -190,6 +192,7 @@ export default {
         wordWrapColumn: 'Kolumna'
     },
     toast: {
+        recoveryFailed: 'Nie udało się zachować otwartych edytorów.',
         imageSavedSuccessfully: 'Obraz zapisany pomyślnie',
         failedToSaveImage: 'Nie udało się zapisać obrazu',
         diagramSavedAsSVG: 'Diagram zapisany jako SVG',

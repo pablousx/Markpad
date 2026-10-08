@@ -135,8 +135,10 @@ test('startup restore reads content from disk, not from the snapshot', () => {
 	assert.match(viewer, /await windowSession\.restore\(\);/);
 });
 
-test('the close flow resolves dirty tabs before serializing window state', () => {
-	const body = settleForExit();
+test('without editor persistence, close resolves dirty tabs before serializing window state', () => {
+	// Persist-open-editors exits earlier with intact buffers; the traditional
+	// save/discard branch still resolves dirty tabs before its window snapshot.
+	const body = sliceBetween(settleForExit(), '// Unsaved content and session restore', 'return true;');
 	const walk = offsetOf(body, 'reviewDirtyTabs({');
 	const persist = offsetOf(body, 'persistWindowState()');
 	assert.ok(walk < persist, 'dirty tabs must be resolved before the snapshot is written');

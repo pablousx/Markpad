@@ -66,6 +66,8 @@ export default {
         files: 'Arquivos',
         fileSettings: 'Configurações de arquivos',
         autoSave: 'Salvar edições automaticamente',
+        persistOpenEditors: 'Manter os editores abertos',
+        persistOpenEditorsHint: 'Manter os editores abertos e as alterações não salvas entre sessões, incluindo documentos sem título. Ao fechar uma janela, não é solicitado salvar. Os arquivos originais não são alterados.',
         toolbarPlacement: 'Posição da barra',
         toolbarOnBar: 'Barra',
         toolbarInMenu: 'Menu',
@@ -181,6 +183,7 @@ export default {
         wordWrapColumn: 'Coluna'
     },
     toast: {
+        recoveryFailed: 'Não foi possível manter os editores abertos.',
         imageSavedSuccessfully: 'Imagem salva com sucesso',
         failedToSaveImage: 'Falha ao salvar imagem',
         diagramSavedAsSVG: 'Diagrama salvo como SVG',

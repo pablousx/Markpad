@@ -67,6 +67,8 @@ export default {
         files: 'ファイル',
         fileSettings: 'ファイル設定',
         autoSave: '編集を自動保存',
+        persistOpenEditors: '開いているエディターを保持',
+        persistOpenEditorsHint: '無題のドキュメントを含め、開いているエディターと未保存の変更をセッション間で保持します。ウィンドウを閉じても保存の確認は表示されません。元のファイルは変更されません。',
         toolbarPlacement: 'ツールバーの配置',
         toolbarOnBar: 'バー',
         toolbarInMenu: 'メニュー',
@@ -182,6 +184,7 @@ export default {
         wordWrapColumn: '列'
     },
     toast: {
+        recoveryFailed: '開いているエディターを保持できませんでした。',
         imageSavedSuccessfully: '画像の保存に成功しました',
         failedToSaveImage: '画像の保存に失敗しました',
         diagramSavedAsSVG: '図がSVGとして保存されました',

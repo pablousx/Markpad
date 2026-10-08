@@ -66,6 +66,8 @@ export default {
         files: 'Tiedostot',
         fileSettings: 'Tiedostoasetukset',
         autoSave: 'Tallenna muutokset automaattisesti',
+        persistOpenEditors: 'Säilytä avoimet editorit',
+        persistOpenEditorsHint: 'Säilytä avoimet editorit ja tallentamattomat muutokset istuntojen välillä, myös nimettömät asiakirjat. Ikkunan sulkeminen ei kehota tallentamaan. Alkuperäisiä tiedostoja ei muuteta.',
         toolbarPlacement: 'Työkalupalkin sijainti',
         toolbarOnBar: 'Palkki',
         toolbarInMenu: 'Valikko',
@@ -181,6 +183,7 @@ export default {
         wordWrapColumn: 'Sarake'
     },
     toast: {
+        recoveryFailed: 'Avoimia editoreita ei voitu säilyttää.',
         imageSavedSuccessfully: 'Kuva tallennettu onnistuneesti',
         failedToSaveImage: 'Kuvan tallennus epäonnistui',
         diagramSavedAsSVG: 'Kaavio tallennettu SVG-muodossa',

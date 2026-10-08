@@ -12,6 +12,8 @@ export default {
         appearanceSettings: 'Настройки внешнего вида',
         fileSettings: 'Настройки файлов',
         autoSave: 'Автосохранение изменений',
+        persistOpenEditors: 'Сохранять открытые редакторы',
+        persistOpenEditorsHint: 'Сохранять открытые редакторы и несохранённые изменения между сеансами, включая документы без названия. При закрытии окна запрос на сохранение не появляется. Исходные файлы не изменяются.',
         resetEditorSettings: 'Сбросить настройки редактора',
         font: 'Шрифт',
         fontSize: 'Размер шрифта',
@@ -182,6 +184,7 @@ export default {
         wordWrapColumn: 'Столбец'
     },
     toast: {
+        recoveryFailed: 'Не удалось сохранить открытые редакторы.',
         imageSavedSuccessfully: 'Изображение сохранено',
         failedToSaveImage: 'Не удалось сохранить изображение',
         diagramSavedAsSVG: 'Диаграмма сохранена как SVG',

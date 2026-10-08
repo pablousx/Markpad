@@ -66,6 +66,8 @@ export default {
         files: 'Filer',
         fileSettings: 'Filinnstillinger',
         autoSave: 'Lagre endringer automatisk',
+        persistOpenEditors: 'Behold åpne editorer',
+        persistOpenEditorsHint: 'Behold åpne editorer og ulagrede endringer mellom økter, også dokumenter uten tittel. Når et vindu lukkes, blir du ikke bedt om å lagre. Originalfilene endres ikke.',
         toolbarPlacement: 'Verktøylinjens plassering',
         toolbarOnBar: 'Linje',
         toolbarInMenu: 'Meny',
@@ -181,6 +183,7 @@ export default {
         wordWrapColumn: 'Kolonne'
     },
     toast: {
+        recoveryFailed: 'Kunne ikke beholde åpne editorer.',
         imageSavedSuccessfully: 'Bilde lagret',
         failedToSaveImage: 'Kunne ikke lagre bilde',
         diagramSavedAsSVG: 'Diagram lagret som SVG',

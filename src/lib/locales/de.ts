@@ -66,6 +66,8 @@ export default {
         files: 'Dateien',
         fileSettings: 'Datei-Einstellungen',
         autoSave: 'Änderungen automatisch speichern',
+        persistOpenEditors: 'Geöffnete Editoren beibehalten',
+        persistOpenEditorsHint: 'Geöffnete Editoren und ungespeicherte Änderungen zwischen Sitzungen beibehalten, auch bei unbenannten Dokumenten. Beim Schließen eines Fensters wird nicht zum Speichern aufgefordert. Die Originaldateien werden nicht verändert.',
         toolbarPlacement: 'Position der Symbolleiste',
         toolbarOnBar: 'Leiste',
         toolbarInMenu: 'Menü',
@@ -181,6 +183,7 @@ export default {
         wordWrapColumn: 'Spalte'
     },
     toast: {
+        recoveryFailed: 'Geöffnete Editoren konnten nicht beibehalten werden.',
         imageSavedSuccessfully: 'Bild erfolgreich gespeichert',
         failedToSaveImage: 'Bild speichern fehlgeschlagen',
         diagramSavedAsSVG: 'Diagramm als SVG gespeichert',

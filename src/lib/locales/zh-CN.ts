@@ -85,6 +85,8 @@ export default {
         shortcuts: '快捷键',
         fileSettings: '文件设置',
         autoSave: '自动保存编辑',
+        persistOpenEditors: '保留打开的编辑器',
+        persistOpenEditorsHint: '在会话之间保留打开的编辑器和未保存的更改，包括无标题文档。关闭窗口时不会提示保存。原始文件不会被修改。',
         settingsFile: '设置文件',
         importSettings: '导入…',
         exportSettings: '导出…',
@@ -234,6 +236,7 @@ export default {
         wholeWord: '全词匹配'
     },
     toast: {
+        recoveryFailed: '无法保留打开的编辑器。',
         imageSavedSuccessfully: '图片保存成功',
         failedToSaveImage: '保存图片失败',
         diagramSavedAsSVG: '图表已保存为SVG',

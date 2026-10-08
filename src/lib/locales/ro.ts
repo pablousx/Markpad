@@ -66,6 +66,8 @@ export default {
         files: 'Fișiere',
         fileSettings: 'Setări fișiere',
         autoSave: 'Salvare automată a modificărilor',
+        persistOpenEditors: 'Păstrează editoarele deschise',
+        persistOpenEditorsHint: 'Păstrează editoarele deschise și modificările nesalvate între sesiuni, inclusiv documentele fără titlu. Închiderea unei ferestre nu solicită salvarea. Fișierele originale nu sunt modificate.',
         toolbarPlacement: 'Poziția barei',
         toolbarOnBar: 'Bară',
         toolbarInMenu: 'Meniu',
@@ -181,6 +183,7 @@ export default {
         wordWrapColumn: 'Coloană'
     },
     toast: {
+        recoveryFailed: 'Nu s-au putut păstra editoarele deschise.',
         imageSavedSuccessfully: 'Imagine salvată cu succes',
         failedToSaveImage: 'Eșec la salvarea imaginii',
         diagramSavedAsSVG: 'Diagramă salvată ca SVG',

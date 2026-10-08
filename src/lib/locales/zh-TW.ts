@@ -15,6 +15,8 @@ export default {
         toolbarsSettings: '工具列設定',
         fileSettings: '檔案設定',
         autoSave: '自動儲存編輯內容',
+        persistOpenEditors: '保留開啟的編輯器',
+        persistOpenEditorsHint: '在工作階段之間保留開啟的編輯器和未儲存的變更，包括無標題文件。關閉視窗時不會提示儲存。原始檔案不會被修改。',
         settingsFile: '設定檔',
         importSettings: '匯入…',
         exportSettings: '匯出…',
@@ -234,6 +236,7 @@ export default {
         wholeWord: '比對完整單字'
     },
     toast: {
+        recoveryFailed: '無法保留開啟的編輯器。',
         imageSavedSuccessfully: '圖片已成功儲存',
         failedToSaveImage: '圖片儲存失敗',
         diagramSavedAsSVG: '圖表已儲存為 SVG',

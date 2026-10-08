@@ -66,6 +66,8 @@ export default {
         files: 'Berkas',
         fileSettings: 'Pengaturan berkas',
         autoSave: 'Simpan otomatis perubahan',
+        persistOpenEditors: 'Pertahankan editor yang terbuka',
+        persistOpenEditorsHint: 'Pertahankan editor yang terbuka dan perubahan yang belum disimpan antar sesi, termasuk dokumen tanpa judul. Menutup jendela tidak akan meminta Anda menyimpan. Berkas asli tidak diubah.',
         toolbarPlacement: 'Posisi bilah alat',
         toolbarOnBar: 'Bilah',
         toolbarInMenu: 'Menu',
@@ -181,6 +183,7 @@ export default {
         wordWrapColumn: 'Kolom'
     },
     toast: {
+        recoveryFailed: 'Tidak dapat mempertahankan editor yang terbuka.',
         imageSavedSuccessfully: 'Gambar berhasil disimpan',
         failedToSaveImage: 'Gagal menyimpan gambar',
         diagramSavedAsSVG: 'Diagram disimpan sebagai SVG',

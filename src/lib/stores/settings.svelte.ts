@@ -586,6 +586,7 @@ export class SettingsStore {
 	// of behaviours the app has — see `autoSaveSetting.ts` for the pair it
 	// replaced and why the two of them were never independent.
 	autoSave = $state(DEFAULT_AUTO_SAVE);
+	persistOpenEditors = $state(false);
 
 	/** The `$effect.root` disposer from the constructor. See {@link dispose}. */
 	#disposeEffects: (() => void) | null = null;
@@ -894,6 +895,14 @@ export function createSettingsPersistence(): PersistedSetting<SettingsStore>[] {
 		booleanSetting('editor.wordCount', (s) => s.wordCount, (s, v) => { s.wordCount = v; }),
 		stringSetting('editor.renderLineHighlight', (s) => s.renderLineHighlight, (s, v) => { s.renderLineHighlight = v; }),
 		booleanSetting('editor.showTabs', (s) => s.showTabs, (s, v) => { s.showTabs = v; }),
+		{
+			key: 'editor.persistOpenEditors',
+			read: (s) => String(s.persistOpenEditors),
+			load: (s, raw) => {
+				const value = raw ?? readStoredKey('editor.persistUnsavedChanges');
+				if (value !== null) s.persistOpenEditors = value === 'true';
+			},
+		},
 		booleanSetting('editor.restoreStateOnReopen', (s) => s.restoreStateOnReopen, (s, v) => { s.restoreStateOnReopen = v; }),
 		booleanSetting('editor.closeWindowWithLastTab', (s) => s.closeWindowWithLastTab, (s, v) => { s.closeWindowWithLastTab = v; }),
 		booleanSetting('editor.zenMode', (s) => s.zenMode, (s, v) => { s.zenMode = v; }),

@@ -66,6 +66,8 @@ export default {
         files: 'Bestanden',
         fileSettings: 'Bestandsinstellingen',
         autoSave: 'Wijzigingen automatisch opslaan',
+        persistOpenEditors: 'Geopende editors behouden',
+        persistOpenEditorsHint: 'Behoud geopende editors en niet-opgeslagen wijzigingen tussen sessies, ook voor documenten zonder titel. Bij het sluiten van een venster wordt niet gevraagd om op te slaan. De oorspronkelijke bestanden worden niet gewijzigd.',
         toolbarPlacement: 'Werkbalkpositie',
         toolbarOnBar: 'Balk',
         toolbarInMenu: 'Menu',
@@ -181,6 +183,7 @@ export default {
         wordWrapColumn: 'Kolom'
     },
     toast: {
+        recoveryFailed: 'Geopende editors konden niet worden behouden.',
         imageSavedSuccessfully: 'Afbeelding succesvol opgeslagen',
         failedToSaveImage: 'Kan afbeelding niet opslaan',
         diagramSavedAsSVG: 'Diagram opgeslagen als SVG',
