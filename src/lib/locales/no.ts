@@ -66,8 +66,8 @@ export default {
         files: 'Filer',
         fileSettings: 'Filinnstillinger',
         autoSave: 'Lagre endringer automatisk',
-        persistOpenEditors: 'Behold åpne editorer',
-        persistOpenEditorsHint: 'Behold åpne editorer og ulagrede endringer mellom økter, også dokumenter uten tittel. Når et vindu lukkes, blir du ikke bedt om å lagre. Originalfilene endres ikke.',
+        persistOpenEditors: 'Behold ulagrede endringer ved lukking',
+        persistOpenEditorsHint: 'Når et vindu lukkes, beholdes ulagrede endringer og dokumenter uten tittel i stedet for å spørre om lagring. De kommer tilbake neste gang Markpad åpnes.',
         toolbarPlacement: 'Verktøylinjens plassering',
         toolbarOnBar: 'Linje',
         toolbarInMenu: 'Meny',
@@ -183,7 +183,7 @@ export default {
         wordWrapColumn: 'Kolonne'
     },
     toast: {
-        recoveryFailed: 'Kunne ikke beholde åpne editorer.',
+        recoveryFailed: 'Kunne ikke beholde ulagrede endringer.',
         imageSavedSuccessfully: 'Bilde lagret',
         failedToSaveImage: 'Kunne ikke lagre bilde',
         diagramSavedAsSVG: 'Diagram lagret som SVG',

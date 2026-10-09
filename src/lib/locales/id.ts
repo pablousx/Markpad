@@ -66,8 +66,8 @@ export default {
         files: 'Berkas',
         fileSettings: 'Pengaturan berkas',
         autoSave: 'Simpan otomatis perubahan',
-        persistOpenEditors: 'Pertahankan editor yang terbuka',
-        persistOpenEditorsHint: 'Pertahankan editor yang terbuka dan perubahan yang belum disimpan antar sesi, termasuk dokumen tanpa judul. Menutup jendela tidak akan meminta Anda menyimpan. Berkas asli tidak diubah.',
+        persistOpenEditors: 'Simpan perubahan yang belum disimpan saat menutup',
+        persistOpenEditorsHint: 'Menutup jendela mempertahankan perubahan yang belum disimpan dan dokumen tanpa judul alih-alih meminta Anda menyimpan. Semuanya kembali saat Markpad dibuka berikutnya.',
         toolbarPlacement: 'Posisi bilah alat',
         toolbarOnBar: 'Bilah',
         toolbarInMenu: 'Menu',
@@ -183,7 +183,7 @@ export default {
         wordWrapColumn: 'Kolom'
     },
     toast: {
-        recoveryFailed: 'Tidak dapat mempertahankan editor yang terbuka.',
+        recoveryFailed: 'Tidak dapat mempertahankan perubahan yang belum disimpan.',
         imageSavedSuccessfully: 'Gambar berhasil disimpan',
         failedToSaveImage: 'Gagal menyimpan gambar',
         diagramSavedAsSVG: 'Diagram disimpan sebagai SVG',

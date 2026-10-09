@@ -66,8 +66,8 @@ export default {
         files: 'Filer',
         fileSettings: 'Filinställningar',
         autoSave: 'Spara ändringar automatiskt',
-        persistOpenEditors: 'Behåll öppna editorer',
-        persistOpenEditorsHint: 'Behåll öppna editorer och osparade ändringar mellan sessioner, även namnlösa dokument. När ett fönster stängs får du ingen fråga om att spara. Originalfilerna ändras inte.',
+        persistOpenEditors: 'Behåll osparade ändringar vid stängning',
+        persistOpenEditorsHint: 'När ett fönster stängs behålls osparade ändringar och namnlösa dokument i stället för att fråga om att spara. De kommer tillbaka nästa gång Markpad öppnas.',
         toolbarPlacement: 'Verktygsfältets placering',
         toolbarOnBar: 'Fält',
         toolbarInMenu: 'Meny',
@@ -183,7 +183,7 @@ export default {
         wordWrapColumn: 'Kolumn'
     },
     toast: {
-        recoveryFailed: 'Kunde inte behålla öppna editorer.',
+        recoveryFailed: 'Kunde inte behålla osparade ändringar.',
         imageSavedSuccessfully: 'Bild sparad',
         failedToSaveImage: 'Kunde inte spara bild',
         diagramSavedAsSVG: 'Diagram sparat som SVG',

@@ -66,8 +66,8 @@ export default {
         files: 'Arquivos',
         fileSettings: 'Configurações de arquivos',
         autoSave: 'Salvar edições automaticamente',
-        persistOpenEditors: 'Manter os editores abertos',
-        persistOpenEditorsHint: 'Manter os editores abertos e as alterações não salvas entre sessões, incluindo documentos sem título. Ao fechar uma janela, não é solicitado salvar. Os arquivos originais não são alterados.',
+        persistOpenEditors: 'Manter alterações não salvas ao fechar',
+        persistOpenEditorsHint: 'Fechar uma janela mantém as alterações não salvas e os documentos sem título em vez de pedir para salvar. Eles voltam na próxima vez que o Markpad abrir.',
         toolbarPlacement: 'Posição da barra',
         toolbarOnBar: 'Barra',
         toolbarInMenu: 'Menu',
@@ -183,7 +183,7 @@ export default {
         wordWrapColumn: 'Coluna'
     },
     toast: {
-        recoveryFailed: 'Não foi possível manter os editores abertos.',
+        recoveryFailed: 'Não foi possível manter as alterações não salvas.',
         imageSavedSuccessfully: 'Imagem salva com sucesso',
         failedToSaveImage: 'Falha ao salvar imagem',
         diagramSavedAsSVG: 'Diagrama salvo como SVG',

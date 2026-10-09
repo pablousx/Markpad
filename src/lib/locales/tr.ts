@@ -66,8 +66,8 @@ export default {
         files: 'Dosyalar',
         fileSettings: 'Dosya ayarları',
         autoSave: 'Düzenlemeleri otomatik kaydet',
-        persistOpenEditors: 'Açık düzenleyicileri koru',
-        persistOpenEditorsHint: 'Adsız belgeler de dahil olmak üzere açık düzenleyicileri ve kaydedilmemiş değişiklikleri oturumlar arasında koru. Bir pencere kapatıldığında kaydetmeniz istenmez. Özgün dosyalar değiştirilmez.',
+        persistOpenEditors: 'Kapatırken kaydedilmemiş değişiklikleri koru',
+        persistOpenEditorsHint: 'Bir pencereyi kapatmak, kaydetmeyi sormak yerine kaydedilmemiş değişiklikleri ve başlıksız belgeleri korur. Markpad bir sonraki açılışında geri gelirler.',
         toolbarPlacement: 'Araç çubuğu konumu',
         toolbarOnBar: 'Çubuk',
         toolbarInMenu: 'Menü',
@@ -183,7 +183,7 @@ export default {
         wordWrapColumn: 'Sütun'
     },
     toast: {
-        recoveryFailed: 'Açık düzenleyiciler korunamadı.',
+        recoveryFailed: 'Kaydedilmemiş değişiklikler korunamadı.',
         imageSavedSuccessfully: 'Görüntü başarıyla kaydedildi',
         failedToSaveImage: 'Görüntü kaydedilemedi',
         diagramSavedAsSVG: 'Diyagram SVG olarak kaydedildi',

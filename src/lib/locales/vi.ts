@@ -66,8 +66,8 @@ export default {
         files: 'Tệp',
         fileSettings: 'Cài đặt tệp',
         autoSave: 'Tự động lưu chỉnh sửa',
-        persistOpenEditors: 'Giữ lại các trình soạn thảo đang mở',
-        persistOpenEditorsHint: 'Giữ lại các trình soạn thảo đang mở và các thay đổi chưa lưu giữa các phiên, kể cả tài liệu chưa có tên. Khi đóng cửa sổ, ứng dụng không hỏi có lưu hay không. Các tệp gốc không bị thay đổi.',
+        persistOpenEditors: 'Giữ thay đổi chưa lưu khi đóng',
+        persistOpenEditorsHint: 'Khi đóng cửa sổ, các thay đổi chưa lưu và tài liệu chưa đặt tên được giữ lại thay vì hỏi có lưu hay không. Chúng sẽ trở lại vào lần mở Markpad tiếp theo.',
         toolbarPlacement: 'Vị trí thanh công cụ',
         toolbarOnBar: 'Thanh',
         toolbarInMenu: 'Menu',
@@ -183,7 +183,7 @@ export default {
         wordWrapColumn: 'Cột'
     },
     toast: {
-        recoveryFailed: 'Không thể giữ lại các trình soạn thảo đang mở.',
+        recoveryFailed: 'Không thể giữ lại các thay đổi chưa lưu.',
         imageSavedSuccessfully: 'Đã lưu hình ảnh thành công',
         failedToSaveImage: 'Không thể lưu hình ảnh',
         diagramSavedAsSVG: 'Đã lưu sơ đồ dưới dạng SVG',

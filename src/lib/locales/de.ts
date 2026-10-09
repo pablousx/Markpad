@@ -66,8 +66,8 @@ export default {
         files: 'Dateien',
         fileSettings: 'Datei-Einstellungen',
         autoSave: 'Änderungen automatisch speichern',
-        persistOpenEditors: 'Geöffnete Editoren beibehalten',
-        persistOpenEditorsHint: 'Geöffnete Editoren und ungespeicherte Änderungen zwischen Sitzungen beibehalten, auch bei unbenannten Dokumenten. Beim Schließen eines Fensters wird nicht zum Speichern aufgefordert. Die Originaldateien werden nicht verändert.',
+        persistOpenEditors: 'Ungespeicherte Änderungen beim Schließen behalten',
+        persistOpenEditorsHint: 'Beim Schließen eines Fensters bleiben ungespeicherte Änderungen und unbenannte Dokumente erhalten, statt zum Speichern aufzufordern. Sie sind beim nächsten Öffnen von Markpad wieder da.',
         toolbarPlacement: 'Position der Symbolleiste',
         toolbarOnBar: 'Leiste',
         toolbarInMenu: 'Menü',
@@ -183,7 +183,7 @@ export default {
         wordWrapColumn: 'Spalte'
     },
     toast: {
-        recoveryFailed: 'Geöffnete Editoren konnten nicht beibehalten werden.',
+        recoveryFailed: 'Ungespeicherte Änderungen konnten nicht behalten werden.',
         imageSavedSuccessfully: 'Bild erfolgreich gespeichert',
         failedToSaveImage: 'Bild speichern fehlgeschlagen',
         diagramSavedAsSVG: 'Diagramm als SVG gespeichert',

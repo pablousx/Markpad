@@ -965,7 +965,7 @@ import { createDocumentSession, type LoadMarkdownOptions } from './sessions/docu
 	}
 
 	/**
-	 * The save/discard close, used when "Persist open editors" is off or its
+	 * The save/discard close, used when "Keep unsaved changes on close" is off or its
 	 * backup cannot be written (`keepUnsavedForExit` runs first otherwise).
 	 * Resolve this window's unsaved tabs, then write the restore snapshot: the
 	 * work that has to happen before the window goes away. False when the reader
