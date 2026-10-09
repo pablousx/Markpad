@@ -504,21 +504,18 @@ fn load_unsaved_recovery_at(dir: &Path) -> Result<Vec<(String, String)>, String>
         Err(error) => return Err(error.to_string()),
     };
     let mut snapshots = Vec::new();
-    for entry in entries {
-        let entry = entry.map_err(|error| error.to_string())?;
+    for entry in entries.flatten() {
         let name = entry.file_name();
         let Some(label) = name.to_str().and_then(|name| name.strip_suffix(".json")) else {
             continue;
         };
-        if recovery_path(dir, label).is_err()
-            || !entry
-                .file_type()
-                .map_err(|error| error.to_string())?
-                .is_file()
+        if recovery_path(dir, label).is_err() || !entry.file_type().is_ok_and(|kind| kind.is_file())
         {
             continue;
         }
-        let json = fs::read_to_string(entry.path()).map_err(|error| error.to_string())?;
+        // One unreadable file must not hide the others. It arrives empty, which
+        // the frontend rejects as a corrupt record and leaves on disk.
+        let json = fs::read_to_string(entry.path()).unwrap_or_default();
         snapshots.push((label.to_string(), json));
     }
     snapshots.sort_by(|a, b| a.0.cmp(&b.0));
@@ -987,7 +984,7 @@ mod tests {
     }
 
     #[test]
-    fn recovery_load_ignores_invalid_names_and_surfaces_read_errors() {
+    fn recovery_load_ignores_invalid_names_and_returns_unreadable_files_empty() {
         let dir = temp_dir("recovery-read");
         fs::write(dir.join("bad.name.json"), "ignored").unwrap();
         fs::write(dir.join(".json"), "ignored").unwrap();
@@ -995,7 +992,15 @@ mod tests {
         fs::create_dir(dir.join("directory.json")).unwrap();
         assert!(load_unsaved_recovery_at(&dir).unwrap().is_empty());
         fs::write(dir.join("main.json"), [0xff]).unwrap();
-        assert!(load_unsaved_recovery_at(&dir).is_err());
+        fs::write(dir.join("window-2.json"), "[1]").unwrap();
+        assert_eq!(
+            load_unsaved_recovery_at(&dir).unwrap(),
+            vec![
+                ("main".to_string(), String::new()),
+                ("window-2".to_string(), "[1]".to_string()),
+            ]
+        );
+        assert_eq!(fs::read(dir.join("main.json")).unwrap(), [0xff]);
         fs::remove_dir_all(dir).unwrap();
     }
 

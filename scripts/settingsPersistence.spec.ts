@@ -1101,32 +1101,21 @@ test('every control in a settings row is a flex item the stylesheet sizes', () =
 	assert.deepEqual(unstyled, [], 'a direct child of .setting-item that no rule sizes gets no column');
 });
 
-test('editor persistence is opt-in, persistent, exported, and independent of auto-save', () => {
+test('editor persistence is on by default, persistent, exported, and independent of auto-save', () => {
 	resetStorage();
 	const store = createStore();
 	flushSync();
-	assert.equal(store.persistOpenEditors, false);
+	assert.equal(store.persistOpenEditors, true);
 	const autoSave = store.autoSave;
-	store.persistOpenEditors = true;
+	store.persistOpenEditors = false;
 	flushSync();
-	assert.equal(localStorage.getItem('editor.persistOpenEditors'), 'true');
+	assert.equal(localStorage.getItem('editor.persistOpenEditors'), 'false');
 	assert.equal(store.autoSave, autoSave);
 	const exported = settingsModule.parseSettingsFile(settingsModule.exportSettings(store));
-	assert.equal(exported.settings['editor.persistOpenEditors'], true);
-	const restored = createStore();
-	assert.equal(restored.persistOpenEditors, true);
-	store.autoSave = false;
-	flushSync();
-	assert.equal(store.persistOpenEditors, true);
-	settingsModule.applySettings(store, { 'editor.persistOpenEditors': false });
-	assert.equal(store.persistOpenEditors, false);
-});
-
-test('editor persistence migrates the previous recovery preference, but the new key wins', () => {
-	resetStorage({ 'editor.persistUnsavedChanges': 'true' });
-	assert.equal(createStore().persistOpenEditors, true);
-	resetStorage({ 'editor.persistUnsavedChanges': 'true', 'editor.persistOpenEditors': 'false' });
+	assert.equal(exported.settings['editor.persistOpenEditors'], false);
 	assert.equal(createStore().persistOpenEditors, false);
+	settingsModule.applySettings(store, { 'editor.persistOpenEditors': true });
+	assert.equal(store.persistOpenEditors, true);
 });
 
 test('no settings row buries a sized control below its own flex level', () => {

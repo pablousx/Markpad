@@ -4,13 +4,13 @@ import { snapshotTab, validateTransferPayload, type TransferableTab } from '../u
 
 type PersistedEditor = TransferableTab & { isTruncated?: boolean };
 
-/** Keep every open editor, including clean and empty untitled buffers. Partial
- * reads carry their guard so they can never be restored as complete documents. */
+/** Only what a close would otherwise ask about: dirty buffers and non-empty
+ * untitled text. Clean files reopen from disk through the session restore.
+ * Partial reads carry their guard so they never restore as complete documents. */
 export function recoverySnapshot(tabs: readonly Tab[]): string {
-	return JSON.stringify(tabs.filter((tab) => !isHomePath(tab.path)).map((tab) => ({
-		...snapshotTab(tab),
-		...(tab.isTruncated ? { isTruncated: true } : {}),
-	})));
+	return JSON.stringify(tabs
+		.filter((tab) => !isHomePath(tab.path) && (tab.isDirty || (tab.path === '' && tab.rawContent !== '')))
+		.map((tab) => ({ ...snapshotTab(tab), ...(tab.isTruncated ? { isTruncated: true } : {}) })));
 }
 
 export function parseRecovery(json: string): PersistedEditor[] {
@@ -25,13 +25,15 @@ export function parseRecovery(json: string): PersistedEditor[] {
 	});
 }
 
-/** Restore over clean session tabs only; never merge two unsaved buffers. */
-export function restoreRecoveryTabs(manager: {
+type RecoveryTarget = {
 	tabs: Tab[];
 	closeTab: (id: string) => void;
 	insertTransferredTab: (snapshot: TransferableTab) => string;
-}, json: string): string[] {
-	const restored: string[] = [];
+};
+
+/** Restore over clean session tabs only; never merge two unsaved buffers. The
+ * saved baseline travels too, so a save still meets the external-change check. */
+function restoreRecoveryTabs(manager: RecoveryTarget, json: string) {
 	// Validate the entire record before changing any tabs.
 	for (const snapshot of parseRecovery(json)) {
 		const existing = snapshot.path
@@ -42,9 +44,33 @@ export function restoreRecoveryTabs(manager: {
 		const id = manager.insertTransferredTab({ ...snapshot, isEditing: true, isSplit: false });
 		const tab = manager.tabs.find((tab) => tab.id === id);
 		if (tab && snapshot.isTruncated) tab.isTruncated = true;
-		restored.push(id);
 	}
-	return restored;
+}
+
+/** Restore the records of windows that are gone and return the other labels consumed.
+ * A corrupt record of another window is reported and left on disk. A corrupt
+ * record of this window throws: the caller must not overwrite it. */
+export function restoreRecords(
+	manager: RecoveryTarget,
+	records: readonly [string, string][],
+	live: ReadonlySet<string>,
+	ownLabel: string,
+	onError: (error: unknown) => void,
+): string[] {
+	const consumed: string[] = [];
+	for (const [label, json] of records) {
+		if (live.has(label)) continue;
+		try {
+			restoreRecoveryTabs(manager, json);
+		} catch (error) {
+			if (label === ownLabel) throw error;
+			onError(error);
+			continue;
+		}
+		// This window's own record is replaced by its next write, not removed.
+		if (label !== ownLabel) consumed.push(label);
+	}
+	return consumed;
 }
 
 /** One writer per window. A bounded delay, not a resetting debounce: continuous

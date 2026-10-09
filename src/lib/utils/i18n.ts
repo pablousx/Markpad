@@ -84,7 +84,7 @@ const en: Translation = {
         fileSettings: 'File Settings',
         autoSave: 'Auto-save edits',
         persistOpenEditors: 'Persist open editors',
-        persistOpenEditorsHint: 'Keep open editors and unsaved changes between sessions, including untitled documents. Closing a window does not prompt to save. Original files are not changed.',
+        persistOpenEditorsHint: 'Keep unsaved changes and untitled documents between sessions. Closing a window keeps them instead of asking to save. Original files are not changed.',
         settingsFile: 'Settings file',
         importSettings: 'Import…',
         exportSettings: 'Export…',
