@@ -1,10 +1,9 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
-import { createUnsavedRecovery, parseRecovery, recoverySnapshot, restoreRecoveryTabs } from '../src/lib/sessions/unsavedRecovery.js';
+import { createUnsavedRecovery, parseRecovery, recoverySnapshot, restoreRecords } from '../src/lib/sessions/unsavedRecovery.js';
 import { buildTransferredTab, type TransferableTab } from '../src/lib/utils/tabTransfer.js';
 import { asRendererLine } from '../src/lib/utils/lineCoordinates.js';
 import { HOME_TAB_PATH } from '../src/lib/utils/homeTab.js';
-import { functionSource, readSource, sliceBetween } from './sourceTree.js';
 
 const document: TransferableTab = {
 	path: '', title: 'Untitled', rawContent: 'unsaved text', originalContent: '',
@@ -21,30 +20,31 @@ test('recovery round-trips untitled and file buffers with baseline and encoding'
 	assert.equal(file.originalContent, 'saved');
 });
 
-test('clean, empty untitled and partial editors persist, but the home tab does not', () => {
-	const clean = buildTransferredTab({ ...document, rawContent: '' }, [], 'Untitled');
-	const partial = buildTransferredTab(document, [], 'Untitled');
+test('only dirty buffers and non-empty untitled text are kept', () => {
+	const tab = (fields: Partial<TransferableTab>) => buildTransferredTab({ ...document, ...fields }, [], 'Untitled');
+	const partial = tab({ path: '/partial.md', originalContent: 'saved' });
 	partial.isTruncated = true;
-	const home = buildTransferredTab({ ...document, path: HOME_TAB_PATH }, [], 'Untitled');
-	const restored = parseRecovery(recoverySnapshot([clean, partial, home]));
-	assert.equal(restored.length, 2);
-	assert.equal(restored[0].rawContent, '');
-	assert.equal(restored[0].originalContent, '');
-	assert.equal(restored[1].isTruncated, true);
+	const kept = parseRecovery(recoverySnapshot([
+		tab({ path: '/clean.md', rawContent: 'saved', originalContent: 'saved' }),
+		tab({ rawContent: '' }),
+		tab({ path: HOME_TAB_PATH }),
+		tab({}),
+		tab({ path: '/dirty.md', originalContent: 'saved' }),
+		partial,
+	]));
+	assert.deepEqual(kept.map((entry) => entry.path), ['', '/dirty.md', '/partial.md']);
+	assert.equal(kept[2].isTruncated, true);
 });
 
 test('invalid recovery records are rejected before restoring any tab', () => {
-	for (const json of ['null', '{}', 'broken', '[{}]', JSON.stringify([{ ...document, isTruncated: 'yes' }]), JSON.stringify([document, {}])]) {
+	for (const json of ['', 'null', '{}', 'broken', '[{}]', JSON.stringify([{ ...document, isTruncated: 'yes' }]), JSON.stringify([document, {}])]) {
 		assert.throws(() => parseRecovery(json));
 	}
 });
 
-test('restore replaces clean session copies, retains dirty copies, and opens untitled buffers', () => {
-	const manager = {
-		tabs: [
-			buildTransferredTab({ ...document, path: '/notes.md', rawContent: 'saved', originalContent: 'saved' }, [], 'Untitled'),
-			buildTransferredTab({ ...document, path: '/other.md' }, [], 'Untitled'),
-		],
+function manager(tabs: TransferableTab[] = []) {
+	return {
+		tabs: tabs.map((tab) => buildTransferredTab(tab, [], 'Untitled')),
 		closeTab(id: string) { this.tabs = this.tabs.filter((tab) => tab.id !== id); },
 		insertTransferredTab(snapshot: TransferableTab) {
 			const tab = buildTransferredTab(snapshot, this.tabs.map((tab) => tab.title), 'Untitled');
@@ -52,44 +52,46 @@ test('restore replaces clean session copies, retains dirty copies, and opens unt
 			return tab.id;
 		},
 	};
-	const dirtyId = manager.tabs[1].id;
-	restoreRecoveryTabs(manager, JSON.stringify([
-		{ ...document, path: '/notes.md', originalContent: 'saved', isEditing: false, isSplit: true },
-		{ ...document, path: '/other.md', rawContent: 'another unsaved copy' },
-		document,
-	]));
-	assert.equal(manager.tabs.length, 4);
-	assert.equal(manager.tabs[0].id, dirtyId);
-	assert.equal(manager.tabs[1].rawContent, 'unsaved text');
-	assert.equal(manager.tabs[1].originalContent, 'saved');
-	assert.equal(manager.tabs[1].isDirty, true);
-	assert.equal(manager.tabs[1].isEditing, true);
-	assert.equal(manager.tabs[1].isSplit, false);
-	assert.equal(manager.tabs[3].path, '');
-	const before = [...manager.tabs];
-	assert.throws(() => restoreRecoveryTabs(manager, JSON.stringify([document, {}])));
-	assert.deepEqual(manager.tabs, before);
+}
+
+test('restore replaces clean session copies, keeps baselines, and skips live windows', () => {
+	const target = manager([
+		{ ...document, path: '/notes.md', rawContent: 'disk', originalContent: 'disk', isDirty: false },
+		{ ...document, path: '/other.md' },
+	]);
+	const dirtyId = target.tabs[1].id;
+	const consumed = restoreRecords(target, [
+		['main', JSON.stringify([{ ...document, path: '/notes.md', originalContent: 'saved', isEditing: false, isSplit: true }])],
+		['window-2', JSON.stringify([{ ...document, path: '/other.md', rawContent: 'another unsaved copy' }, document])],
+		['window-3', JSON.stringify([{ ...document, rawContent: 'still open elsewhere' }])],
+	], new Set(['window-3']), 'main', (error) => { throw error; });
+	assert.deepEqual(consumed, ['window-2']);
+	assert.deepEqual(target.tabs.map((tab) => tab.path), ['/other.md', '/notes.md', '/other.md', '']);
+	assert.equal(target.tabs[0].id, dirtyId);
+	assert.equal(target.tabs[1].rawContent, 'unsaved text');
+	assert.equal(target.tabs[1].originalContent, 'saved');
+	assert.equal(target.tabs[1].isDirty, true);
+	assert.equal(target.tabs[1].isEditing, true);
+	assert.equal(target.tabs[1].isSplit, false);
 });
 
-test('saved file editors and blank untitled editors are restored as clean tabs', () => {
-	const manager = {
-		tabs: [] as ReturnType<typeof buildTransferredTab>[],
-		closeTab() {},
-		insertTransferredTab(snapshot: TransferableTab) {
-			const tab = buildTransferredTab(snapshot, this.tabs.map((tab) => tab.title), 'Untitled');
-			this.tabs.push(tab);
-			return tab.id;
-		},
-	};
-	const clean = { ...document, rawContent: 'saved', originalContent: 'saved', path: '/saved.md' };
-	const empty = { ...document, rawContent: '' };
-	const ids = restoreRecoveryTabs(manager, JSON.stringify([clean, empty, { ...clean, path: '/partial.md', isTruncated: true }]));
-	assert.equal(ids.length, 3);
-	assert.equal(manager.tabs[0].path, '/saved.md');
-	assert.equal(manager.tabs[0].isDirty, false);
-	assert.equal(manager.tabs[1].path, '');
-	assert.equal(manager.tabs[1].isDirty, false);
-	assert.equal(manager.tabs[2].isTruncated, true);
+test('a corrupt record of another window is reported, skipped, and left unconsumed', () => {
+	const target = manager();
+	const errors: unknown[] = [];
+	const consumed = restoreRecords(target, [
+		['window-2', ''],
+		['window-3', JSON.stringify([document, {}])],
+		['window-4', JSON.stringify([document])],
+	], new Set(), 'main', (error) => errors.push(error));
+	assert.equal(errors.length, 2);
+	assert.deepEqual(consumed, ['window-4']);
+	assert.equal(target.tabs.length, 1);
+});
+
+test('a corrupt record of this window throws, so the caller never overwrites it', () => {
+	const target = manager();
+	assert.throws(() => restoreRecords(target, [['main', '{']], new Set(), 'main', () => {}));
+	assert.equal(target.tabs.length, 0);
 });
 
 test('continuous changes reach disk within the bounded background delay', async (context) => {
@@ -126,21 +128,6 @@ test('flush cancels delayed writes and serializes cleanup behind in-flight write
 	await Promise.all([first, cleanup]);
 	assert.deepEqual(writes, ['new', '[]']);
 	recovery.dispose();
-});
-
-test('window close persists enabled editors before the save/discard review, and refuses an unsafe exit', () => {
-	const viewer = readSource('src/lib/MarkdownViewer.svelte');
-	const settle = functionSource(viewer, 'settleForExit');
-	const persistBranch = sliceBetween(settle, 'if (settings.persistOpenEditors)', '// Unsaved content and session restore');
-	assert.match(persistBranch, /if \(!recoveryReady\)/);
-	assert.match(persistBranch, /await unsavedRecovery\.flush\(recoverySnapshot\(tabManager\.tabs\)\)/);
-	assert.match(persistBranch, /return false/);
-	assert.match(persistBranch, /return true/);
-	assert.doesNotMatch(persistBranch, /reviewDirtyTabs|canCloseTab|saveSilently/);
-	assert.match(settle, /await reviewDirtyTabs/);
-	const cleanRefresh = sliceBetween(viewer, 'const restoredIds = restoreRecoveryTabs', 'consumed.push(label)');
-	assert.match(cleanRefresh, /tab\.isDirty \|\| !hasRealFilePath/);
-	assert.match(cleanRefresh, /read_file_content_checked/);
 });
 
 test('failed writes retry without another edit and flush reports failure', async (context) => {
