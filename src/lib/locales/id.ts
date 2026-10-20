@@ -80,7 +80,7 @@ export default {
         fileSettings: 'Pengaturan berkas',
         autoSave: 'Simpan otomatis perubahan',
         persistOpenEditors: 'Simpan perubahan yang belum disimpan saat menutup',
-        persistOpenEditorsHint: 'Menutup jendela mempertahankan perubahan yang belum disimpan dan dokumen tanpa judul alih-alih meminta Anda menyimpan. Semuanya kembali saat Markpad dibuka berikutnya.',
+        persistOpenEditorsHint: 'Keluar atau menutup jendela terakhir mempertahankan perubahan yang belum disimpan dan dokumen tanpa judul alih-alih meminta Anda menyimpan. Semuanya kembali saat Markpad dibuka berikutnya. Menutup salah satu dari beberapa jendela tetap akan bertanya.',
         toolbarPlacement: 'Posisi bilah alat',
         toolbarOnBar: 'Bilah',
         toolbarInMenu: 'Menu',

@@ -80,7 +80,7 @@ export default {
         fileSettings: 'Bestandsinstellingen',
         autoSave: 'Wijzigingen automatisch opslaan',
         persistOpenEditors: 'Niet-opgeslagen wijzigingen behouden bij sluiten',
-        persistOpenEditorsHint: 'Bij het sluiten van een venster blijven niet-opgeslagen wijzigingen en naamloze documenten behouden in plaats van te vragen om op te slaan. Ze komen terug wanneer Markpad de volgende keer opent.',
+        persistOpenEditorsHint: 'Bij het afsluiten of het sluiten van het laatste venster blijven niet-opgeslagen wijzigingen en naamloze documenten behouden in plaats van te vragen om op te slaan. Ze komen terug wanneer Markpad de volgende keer opent. Bij het sluiten van een van meerdere vensters wordt nog steeds gevraagd.',
         toolbarPlacement: 'Werkbalkpositie',
         toolbarOnBar: 'Balk',
         toolbarInMenu: 'Menu',

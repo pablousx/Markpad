@@ -4,6 +4,7 @@ import { createUnsavedRecovery, parseRecovery, recoverySnapshot, restoreRecords 
 import { buildTransferredTab, type TransferableTab } from '../src/lib/utils/tabTransfer.js';
 import { asRendererLine } from '../src/lib/utils/lineCoordinates.js';
 import { HOME_TAB_PATH } from '../src/lib/utils/homeTab.js';
+import { readSource } from './sourceTree.js';
 
 const document: TransferableTab = {
 	path: '', title: 'Untitled', rawContent: 'unsaved text', originalContent: '',
@@ -159,4 +160,14 @@ test('write failures are reported without blocking later snapshots', async () =>
 	assert.equal(errors.length, 1);
 	assert.deepEqual(writes, ['bad', '[]']);
 	recovery.dispose();
+});
+
+test('the close decision commands are spelled the same in the viewer and in Rust', () => {
+	// Cross-language contract: only the string connects invoke() to the command.
+	const viewer = readSource('src/lib/MarkdownViewer.svelte');
+	const rust = readSource('src-tauri/src/window_runtime.rs');
+	for (const name of ['keeps_unsaved_on_close', 'set_quitting']) {
+		assert.ok(viewer.includes(`invoke<boolean>('${name}'`) || viewer.includes(`invoke('${name}'`), `viewer does not invoke ${name}`);
+		assert.match(rust, new RegExp(`pub fn ${name}\\(`), `Rust does not declare ${name}`);
+	}
 });

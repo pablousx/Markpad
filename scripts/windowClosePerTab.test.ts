@@ -145,7 +145,7 @@ test('a cancelled walk stops the handler before it persists or closes', () => {
 	assert.ok(bail < offsetOf(body, 'persistWindowState()', walk), 'cancel returns before the snapshot');
 
 	const handler = closeHandler();
-	const stop = offsetOf(handler, 'if (!(await settleForExit())) return;');
+	const stop = offsetOf(handler, 'return;', offsetOf(handler, 'if (!(await settleForExit())) {'));
 	assert.ok(stop < offsetOf(handler, 'appWindow.close()', stop), 'and before the close is re-triggered');
 });
 

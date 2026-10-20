@@ -80,7 +80,7 @@ export default {
         fileSettings: 'Paramètres des fichiers',
         autoSave: 'Enregistrement automatique des modifications',
         persistOpenEditors: 'Conserver les modifications non enregistrées à la fermeture',
-        persistOpenEditorsHint: 'La fermeture d’une fenêtre conserve les modifications non enregistrées et les documents sans titre au lieu de demander d’enregistrer. Ils reviennent à la prochaine ouverture de Markpad.',
+        persistOpenEditorsHint: 'Quitter Markpad ou fermer la dernière fenêtre conserve les modifications non enregistrées et les documents sans titre au lieu de demander d’enregistrer. Ils reviennent à la prochaine ouverture de Markpad. Fermer l’une de plusieurs fenêtres demande toujours.',
         toolbarPlacement: 'Emplacement de la barre',
         toolbarOnBar: 'Barre',
         toolbarInMenu: 'Menu',

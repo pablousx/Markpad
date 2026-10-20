@@ -84,7 +84,7 @@ const en: Translation = {
         fileSettings: 'File Settings',
         autoSave: 'Auto-save edits',
         persistOpenEditors: 'Keep unsaved changes on close',
-        persistOpenEditorsHint: 'Closing a window keeps unsaved changes and untitled documents instead of asking to save. They come back the next time Markpad opens.',
+        persistOpenEditorsHint: 'Quitting or closing the last window keeps unsaved changes and untitled documents instead of asking to save. They come back the next time Markpad opens. Closing one of several windows still asks.',
         settingsFile: 'Settings file',
         importSettings: 'Import…',
         exportSettings: 'Export…',

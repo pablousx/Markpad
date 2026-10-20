@@ -80,7 +80,7 @@ export default {
         fileSettings: 'Configurações de arquivos',
         autoSave: 'Salvar edições automaticamente',
         persistOpenEditors: 'Manter alterações não salvas ao fechar',
-        persistOpenEditorsHint: 'Fechar uma janela mantém as alterações não salvas e os documentos sem título em vez de pedir para salvar. Eles voltam na próxima vez que o Markpad abrir.',
+        persistOpenEditorsHint: 'Sair ou fechar a última janela mantém as alterações não salvas e os documentos sem título em vez de pedir para salvar. Eles voltam na próxima vez que o Markpad abrir. Fechar uma de várias janelas ainda pergunta.',
         toolbarPlacement: 'Posição da barra',
         toolbarOnBar: 'Barra',
         toolbarInMenu: 'Menu',

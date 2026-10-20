@@ -99,7 +99,7 @@ export default {
         fileSettings: '파일 설정',
         autoSave: '편집 내용 자동 저장',
         persistOpenEditors: '닫을 때 저장되지 않은 변경 사항 유지',
-        persistOpenEditorsHint: '창을 닫을 때 저장 여부를 묻는 대신 저장되지 않은 변경 사항과 제목 없는 문서를 유지합니다. 다음에 Markpad를 열면 다시 나타납니다.',
+        persistOpenEditorsHint: '종료하거나 마지막 창을 닫을 때 저장 여부를 묻는 대신 저장되지 않은 변경 사항과 제목 없는 문서를 유지합니다. 다음에 Markpad를 열면 다시 나타납니다. 여러 창 중 하나를 닫을 때는 계속 묻습니다.',
         move: '이동',
         resizeWindow: '설정 창 크기 조정'
     },

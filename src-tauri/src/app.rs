@@ -278,6 +278,8 @@ pub fn run() {
             window_runtime::save_unsaved_recovery,
             window_runtime::load_unsaved_recovery,
             window_runtime::clear_unsaved_recovery,
+            window_runtime::set_quitting,
+            window_runtime::keeps_unsaved_on_close,
             window_runtime::save_restore_progress,
             window_runtime::load_restore_progress,
             window_runtime::clear_restore_progress

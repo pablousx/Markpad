@@ -80,7 +80,7 @@ export default {
         fileSettings: 'Cài đặt tệp',
         autoSave: 'Tự động lưu chỉnh sửa',
         persistOpenEditors: 'Giữ thay đổi chưa lưu khi đóng',
-        persistOpenEditorsHint: 'Khi đóng cửa sổ, các thay đổi chưa lưu và tài liệu chưa đặt tên được giữ lại thay vì hỏi có lưu hay không. Chúng sẽ trở lại vào lần mở Markpad tiếp theo.',
+        persistOpenEditorsHint: 'Khi thoát hoặc đóng cửa sổ cuối cùng, các thay đổi chưa lưu và tài liệu chưa đặt tên được giữ lại thay vì hỏi có lưu hay không. Chúng sẽ trở lại vào lần mở Markpad tiếp theo. Khi đóng một trong nhiều cửa sổ, ứng dụng vẫn hỏi.',
         toolbarPlacement: 'Vị trí thanh công cụ',
         toolbarOnBar: 'Thanh',
         toolbarInMenu: 'Menu',

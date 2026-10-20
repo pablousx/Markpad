@@ -80,7 +80,7 @@ export default {
         fileSettings: 'Filinnstillinger',
         autoSave: 'Lagre endringer automatisk',
         persistOpenEditors: 'Behold ulagrede endringer ved lukking',
-        persistOpenEditorsHint: 'Når et vindu lukkes, beholdes ulagrede endringer og dokumenter uten tittel i stedet for å spørre om lagring. De kommer tilbake neste gang Markpad åpnes.',
+        persistOpenEditorsHint: 'Når Markpad avsluttes eller det siste vinduet lukkes, beholdes ulagrede endringer og dokumenter uten tittel i stedet for å spørre om lagring. De kommer tilbake neste gang Markpad åpnes. Lukking av ett av flere vinduer spør fortsatt.',
         toolbarPlacement: 'Verktøylinjens plassering',
         toolbarOnBar: 'Linje',
         toolbarInMenu: 'Meny',

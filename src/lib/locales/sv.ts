@@ -80,7 +80,7 @@ export default {
         fileSettings: 'Filinställningar',
         autoSave: 'Spara ändringar automatiskt',
         persistOpenEditors: 'Behåll osparade ändringar vid stängning',
-        persistOpenEditorsHint: 'När ett fönster stängs behålls osparade ändringar och namnlösa dokument i stället för att fråga om att spara. De kommer tillbaka nästa gång Markpad öppnas.',
+        persistOpenEditorsHint: 'När Markpad avslutas eller det sista fönstret stängs behålls osparade ändringar och namnlösa dokument i stället för att fråga om att spara. De kommer tillbaka nästa gång Markpad öppnas. Att stänga ett av flera fönster frågar fortfarande.',
         toolbarPlacement: 'Verktygsfältets placering',
         toolbarOnBar: 'Fält',
         toolbarInMenu: 'Meny',

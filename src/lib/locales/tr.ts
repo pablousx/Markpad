@@ -80,7 +80,7 @@ export default {
         fileSettings: 'Dosya ayarları',
         autoSave: 'Düzenlemeleri otomatik kaydet',
         persistOpenEditors: 'Kapatırken kaydedilmemiş değişiklikleri koru',
-        persistOpenEditorsHint: 'Bir pencereyi kapatmak, kaydetmeyi sormak yerine kaydedilmemiş değişiklikleri ve başlıksız belgeleri korur. Markpad bir sonraki açılışında geri gelirler.',
+        persistOpenEditorsHint: 'Çıkmak veya son pencereyi kapatmak, kaydetmeyi sormak yerine kaydedilmemiş değişiklikleri ve başlıksız belgeleri korur. Markpad bir sonraki açılışında geri gelirler. Birkaç pencereden birini kapatmak yine de sorar.',
         toolbarPlacement: 'Araç çubuğu konumu',
         toolbarOnBar: 'Çubuk',
         toolbarInMenu: 'Menü',

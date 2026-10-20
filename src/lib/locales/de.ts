@@ -80,7 +80,7 @@ export default {
         fileSettings: 'Datei-Einstellungen',
         autoSave: 'Änderungen automatisch speichern',
         persistOpenEditors: 'Ungespeicherte Änderungen beim Schließen behalten',
-        persistOpenEditorsHint: 'Beim Schließen eines Fensters bleiben ungespeicherte Änderungen und unbenannte Dokumente erhalten, statt zum Speichern aufzufordern. Sie sind beim nächsten Öffnen von Markpad wieder da.',
+        persistOpenEditorsHint: 'Beim Beenden oder Schließen des letzten Fensters bleiben ungespeicherte Änderungen und unbenannte Dokumente erhalten, statt zum Speichern aufzufordern. Sie sind beim nächsten Öffnen von Markpad wieder da. Beim Schließen eines von mehreren Fenstern wird weiterhin gefragt.',
         toolbarPlacement: 'Position der Symbolleiste',
         toolbarOnBar: 'Leiste',
         toolbarInMenu: 'Menü',

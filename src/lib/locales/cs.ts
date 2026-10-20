@@ -80,7 +80,7 @@ export default {
         fileSettings: 'Nastavení souborů',
         autoSave: 'Automaticky ukládat úpravy',
         persistOpenEditors: 'Při zavření zachovat neuložené změny',
-        persistOpenEditorsHint: 'Zavření okna zachová neuložené změny a dokumenty bez názvu místo dotazu na uložení. Vrátí se při příštím spuštění Markpadu.',
+        persistOpenEditorsHint: 'Ukončení aplikace nebo zavření posledního okna zachová neuložené změny a dokumenty bez názvu místo dotazu na uložení. Vrátí se při příštím spuštění Markpadu. Zavření jednoho z více oken se stále zeptá.',
         toolbarPlacement: 'Umístění panelu',
         toolbarOnBar: 'Panel',
         toolbarInMenu: 'Nabídka',

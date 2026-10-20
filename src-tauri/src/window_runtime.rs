@@ -32,6 +32,8 @@ pub struct AppState {
     /// a critical section rather than a value, so the payload is `()` — see
     /// `update_pinned_tags` for why the whole cycle has to be inside it.
     pinned_tags: Mutex<()>,
+    /// Set by Quit before it closes the windows; cleared when a close is cancelled.
+    quitting: AtomicBool,
 }
 
 /// Locks `mutex`, recovering the guarded value if a previous holder panicked.
@@ -60,6 +62,7 @@ impl AppState {
             window_registry: Mutex::new(HashMap::new()),
             window_counter: AtomicU64::new(0),
             pinned_tags: Mutex::new(()),
+            quitting: AtomicBool::new(false),
         }
     }
 }
@@ -359,6 +362,41 @@ pub fn list_viewer_windows(state: State<'_, AppState>) -> Vec<WindowListEntry> {
         .collect();
     list.sort_by_key(|entry| entry.meta.number);
     list
+}
+
+#[tauri::command]
+pub fn set_quitting(state: State<'_, AppState>, quitting: bool) {
+    state.quitting.store(quitting, Ordering::SeqCst);
+}
+
+/// Hot exit applies when the app is quitting or no other viewer window is open,
+/// so the app exits with this window. Two windows closing at once each still see
+/// the other and ask: a race costs a prompt, never hides content.
+fn keeps_unsaved_on_close_for<'a>(
+    quitting: bool,
+    own: &str,
+    open: impl IntoIterator<Item = &'a str>,
+) -> bool {
+    quitting
+        || !open
+            .into_iter()
+            .any(|label| label != own && is_viewer_label(label))
+}
+
+#[tauri::command]
+pub fn keeps_unsaved_on_close(
+    window: tauri::WebviewWindow,
+    app: AppHandle,
+    state: State<'_, AppState>,
+) -> bool {
+    // Tauri's own window list, not the registry: a window counts as open before
+    // its frontend has registered.
+    let open = app.webview_windows();
+    keeps_unsaved_on_close_for(
+        state.quitting.load(Ordering::SeqCst),
+        window.label(),
+        open.keys().map(String::as_str),
+    )
 }
 
 #[tauri::command]
@@ -934,6 +972,31 @@ mod tests {
         let dir = std::env::temp_dir().join(format!("markpad-{tag}-{nonce}"));
         fs::create_dir_all(&dir).unwrap();
         dir
+    }
+
+    #[test]
+    fn unsaved_changes_are_kept_only_by_the_last_window_or_on_quit() {
+        assert!(keeps_unsaved_on_close_for(false, "main", ["main"]));
+        assert!(keeps_unsaved_on_close_for(
+            false,
+            "window-2",
+            ["window-2", "settings"]
+        ));
+        assert!(!keeps_unsaved_on_close_for(
+            false,
+            "main",
+            ["main", "window-2"]
+        ));
+        assert!(!keeps_unsaved_on_close_for(
+            false,
+            "window-2",
+            ["main", "window-2"]
+        ));
+        assert!(keeps_unsaved_on_close_for(
+            true,
+            "main",
+            ["main", "window-2"]
+        ));
     }
 
     #[test]

@@ -16,7 +16,7 @@ export default {
         fileSettings: '檔案設定',
         autoSave: '自動儲存編輯內容',
         persistOpenEditors: '關閉時保留未儲存的變更',
-        persistOpenEditorsHint: '關閉視窗時保留未儲存的變更和未命名文件，不再詢問是否儲存。下次開啟 Markpad 時還原。',
+        persistOpenEditorsHint: '結束或關閉最後一個視窗時保留未儲存的變更和未命名文件，下次開啟 Markpad 時還原；關閉其他視窗時仍會詢問。',
         settingsFile: '設定檔',
         importSettings: '匯入…',
         exportSettings: '匯出…',

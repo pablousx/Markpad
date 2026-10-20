@@ -698,12 +698,14 @@ import { createDocumentSession, type LoadMarkdownOptions } from './sessions/docu
 	/**
 	 * Hot exit: keep unsaved buffers instead of asking. Pending auto-saves write
 	 * their files first; a refused or failed save stays dirty and is kept. False
-	 * when the backup cannot be written, and the caller asks as usual.
+	 * when the backup cannot be written or `applies` says no, and the caller asks
+	 * as usual. `applies` runs inside the walk guard, so a second close is refused meanwhile.
 	 */
-	async function keepUnsavedForExit(): Promise<boolean> {
+	async function keepUnsavedForExit(applies = async () => true): Promise<boolean> {
 		if (!recoveryReady) return false;
 		isCloseWalkActive = true;
 		try {
+			if (!(await applies())) return false;
 			if (settings.autoSave) {
 				for (const tab of tabManager.tabs.filter((t) => t.isDirty && t.path !== '')) await saveSilently(tab.id);
 			}
@@ -983,8 +985,9 @@ import { createDocumentSession, type LoadMarkdownOptions } from './sessions/docu
 	}
 
 	/**
-	 * The save/discard close, used when "Keep unsaved changes on close" is off or its
-	 * backup cannot be written (`keepUnsavedForExit` runs first otherwise).
+	 * The save/discard close, used when "Keep unsaved changes on close" is off, when
+	 * closing one of several windows, or when the backup cannot be written
+	 * (`keepUnsavedForExit` runs first otherwise).
 	 * Resolve this window's unsaved tabs, then write the restore snapshot: the
 	 * work that has to happen before the window goes away. False when the reader
 	 * cancelled, and nothing has been written.
@@ -1100,6 +1103,8 @@ import { createDocumentSession, type LoadMarkdownOptions } from './sessions/docu
 	 * each still guarding its own buffers.
 	 */
 	async function appExit() {
+		// Quit keeps unsaved changes in every window, not only the last one.
+		await invoke('set_quitting', { quitting: true }).catch(console.error);
 		for (const other of await getAllWindows()) {
 			if (other.label !== appWindow.label) await other.close();
 		}
@@ -3889,17 +3894,26 @@ import { createDocumentSession, type LoadMarkdownOptions } from './sessions/docu
 						return;
 					}
 
-					// Hot exit: the backup is written, nothing to ask, close proceeds.
-					// Decided before `hadDirtyTabs`: the buffers stay dirty, and a
-					// re-triggered close would only find them again.
-					if (settings.persistOpenEditors && (await keepUnsavedForExit())) return;
+					// Hot exit on quit or when the app exits with this window: the
+					// backup is written, nothing to ask, close proceeds. Closing one
+					// of several windows asks below. Decided before `hadDirtyTabs`:
+					// the buffers stay dirty, and a re-triggered close would only
+					// find them again. If unsure, ask.
+					const keepsUnsaved = () => invoke<boolean>('keeps_unsaved_on_close').catch(() => false);
+					if (settings.persistOpenEditors && (await keepUnsavedForExit(keepsUnsaved))) return;
 
 					// With tabs to review the close is held open while their
 					// dialogs are up, then re-triggered: the handler re-enters,
 					// finds nothing dirty, and the close proceeds.
 					const hadDirtyTabs = tabManager.tabs.some((t) => t.isDirty);
 					if (hadDirtyTabs) event.preventDefault();
-					if (!(await settleForExit())) return;
+					if (!(await settleForExit())) {
+						// A cancelled close cancels the quit, so the windows left ask again.
+						invoke('set_quitting', { quitting: false }).catch(console.error);
+						return;
+					}
+					// Resolved: drop the backup, so a discarded buffer stays gone.
+					if (recoveryReady) await unsavedRecovery.flush('[]');
 					if (hadDirtyTabs) appWindow.close();
 				}),
 			);

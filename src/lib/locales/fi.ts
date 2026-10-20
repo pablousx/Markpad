@@ -80,7 +80,7 @@ export default {
         fileSettings: 'Tiedostoasetukset',
         autoSave: 'Tallenna muutokset automaattisesti',
         persistOpenEditors: 'Säilytä tallentamattomat muutokset suljettaessa',
-        persistOpenEditorsHint: 'Ikkunan sulkeminen säilyttää tallentamattomat muutokset ja nimettömät asiakirjat tallennuskysymyksen sijaan. Ne palaavat, kun Markpad avataan seuraavan kerran.',
+        persistOpenEditorsHint: 'Sovelluksen lopettaminen tai viimeisen ikkunan sulkeminen säilyttää tallentamattomat muutokset ja nimettömät asiakirjat tallennuskysymyksen sijaan. Ne palaavat, kun Markpad avataan seuraavan kerran. Yhden useasta ikkunasta sulkeminen kysyy edelleen.',
         toolbarPlacement: 'Työkalupalkin sijainti',
         toolbarOnBar: 'Palkki',
         toolbarInMenu: 'Valikko',

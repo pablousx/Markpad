@@ -101,7 +101,7 @@ export default {
         fileSettings: '文件设置',
         autoSave: '自动保存编辑',
         persistOpenEditors: '关闭时保留未保存的更改',
-        persistOpenEditorsHint: '关闭窗口时保留未保存的更改和无标题文档，不再询问是否保存。下次打开 Markpad 时恢复。',
+        persistOpenEditorsHint: '退出或关闭最后一个窗口时保留未保存的更改和无标题文档，下次打开 Markpad 时恢复；关闭其他窗口时仍会询问。',
         settingsFile: '设置文件',
         importSettings: '导入…',
         exportSettings: '导出…',

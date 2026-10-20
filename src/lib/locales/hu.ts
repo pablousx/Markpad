@@ -80,7 +80,7 @@ export default {
         fileSettings: 'Fájlbeállítások',
         autoSave: 'Módosítások automatikus mentése',
         persistOpenEditors: 'Nem mentett módosítások megőrzése bezáráskor',
-        persistOpenEditorsHint: 'Az ablak bezárása megőrzi a nem mentett módosításokat és a névtelen dokumentumokat, ahelyett hogy mentést kérne. A Markpad következő megnyitásakor visszatérnek.',
+        persistOpenEditorsHint: 'A kilépés vagy az utolsó ablak bezárása megőrzi a nem mentett módosításokat és a névtelen dokumentumokat, ahelyett hogy mentést kérne. A Markpad következő megnyitásakor visszatérnek. Több ablak közül egy bezárásakor továbbra is rákérdez.',
         toolbarPlacement: 'Eszköztár helye',
         toolbarOnBar: 'Sáv',
         toolbarInMenu: 'Menü',

@@ -99,7 +99,7 @@ export default {
         fileSettings: 'Ustawienia plików',
         autoSave: 'Autozapis zmian',
         persistOpenEditors: 'Zachowuj niezapisane zmiany przy zamykaniu',
-        persistOpenEditorsHint: 'Zamknięcie okna zachowuje niezapisane zmiany i dokumenty bez tytułu zamiast pytać o zapisanie. Wracają przy następnym otwarciu Markpad.',
+        persistOpenEditorsHint: 'Zamknięcie aplikacji lub ostatniego okna zachowuje niezapisane zmiany i dokumenty bez tytułu zamiast pytać o zapisanie. Wracają przy następnym otwarciu Markpad. Zamknięcie jednego z kilku okien nadal pyta.',
         resizeWindow: 'Zmień rozmiar okna ustawień'
     },
     colors: {

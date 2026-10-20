@@ -80,7 +80,7 @@ export default {
         fileSettings: 'Setări fișiere',
         autoSave: 'Salvare automată a modificărilor',
         persistOpenEditors: 'Păstrează modificările nesalvate la închidere',
-        persistOpenEditorsHint: 'Închiderea unei ferestre păstrează modificările nesalvate și documentele fără titlu în loc să ceară salvarea. Acestea revin la următoarea deschidere a Markpad.',
+        persistOpenEditorsHint: 'Ieșirea sau închiderea ultimei ferestre păstrează modificările nesalvate și documentele fără titlu în loc să ceară salvarea. Acestea revin la următoarea deschidere a Markpad. Închiderea uneia dintre mai multe ferestre întreabă în continuare.',
         toolbarPlacement: 'Poziția barei',
         toolbarOnBar: 'Bară',
         toolbarInMenu: 'Meniu',
