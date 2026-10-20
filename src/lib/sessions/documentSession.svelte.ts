@@ -206,6 +206,19 @@ export function createDocumentSession(options: DocumentSessionOptions) {
 	}
 
 	/**
+	 * Dirty file tabs whose file changed since their baseline. At startup these are
+	 * restored backups the disk moved under while Markpad was closed: no watcher
+	 * event will ever report that change, so it is asked here.
+	 */
+	async function dirtyTabsChangedOnDisk(): Promise<string[]> {
+		const changed: string[] = [];
+		for (const tab of tabManager.tabs.filter((tab) => tab.isDirty && tab.path !== '')) {
+			if (await fileDiffersFromBaseline(tab, tab.path)) changed.push(tab.id);
+		}
+		return changed;
+	}
+
+	/**
 	 * "Keep my version" — the next save of this tab may overwrite a file that
 	 * has changed underneath it.
 	 *
@@ -919,5 +932,5 @@ export function createDocumentSession(options: DocumentSessionOptions) {
 		return true;
 	}
 
-	return { loadMarkdown, saveContent, saveContentAs, toggleTaskCheckbox, allowOverwriteOnce, resolveExternalChange, ensureFullContent, canCloseTab, isLossySaveRefused };
+	return { loadMarkdown, saveContent, saveContentAs, toggleTaskCheckbox, allowOverwriteOnce, resolveExternalChange, dirtyTabsChangedOnDisk, ensureFullContent, canCloseTab, isLossySaveRefused };
 }

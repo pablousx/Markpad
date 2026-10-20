@@ -686,6 +686,7 @@ import { createDocumentSession, type LoadMarkdownOptions } from './sessions/docu
 				// Publish the new owner before removing stale window copies.
 				await invoke('save_unsaved_recovery', { json: recoverySnapshot(tabManager.tabs) });
 				await invoke('clear_unsaved_recovery', { labels: consumed });
+				for (const id of await documentSession.dirtyTabsChangedOnDisk()) noteExternalChangeConflict(id);
 			}
 			recoveryReady = true;
 		} catch (error) {

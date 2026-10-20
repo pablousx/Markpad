@@ -132,6 +132,28 @@ test('a tab with unsaved edits is never reloaded behind the user', async () => {
 	assert.equal(tab.isDirty, true);
 });
 
+test('a restored backup whose file changed while closed is reported, without touching it', async () => {
+	// No watcher saw that change, so startup has to ask. A missing file counts
+	// as changed, like every other unreadable read here.
+	reset();
+	const session = makeSession();
+	const moved = open('/notes/moved.md', 'baseline');
+	tabManager.updateTabRawContent(moved.id, 'backup text');
+	disk.set('/notes/moved.md', 'edited elsewhere');
+	const gone = open('/notes/gone.md', 'baseline');
+	tabManager.updateTabRawContent(gone.id, 'backup text');
+	disk.delete('/notes/gone.md');
+	const same = open('/notes/same.md', 'baseline');
+	tabManager.updateTabRawContent(same.id, 'backup text');
+	const clean = open('/notes/clean.md', 'baseline');
+	disk.set('/notes/clean.md', 'edited elsewhere');
+
+	assert.deepEqual(await session.dirtyTabsChangedOnDisk(), [moved.id, gone.id]);
+	assert.equal(moved.rawContent, 'backup text');
+	assert.equal(moved.originalContent, 'baseline');
+	assert.equal(clean.rawContent, 'baseline');
+});
+
 test('the changed path decides which tab is affected, not whichever tab is active', async () => {
 	reset();
 	const session = makeSession();
